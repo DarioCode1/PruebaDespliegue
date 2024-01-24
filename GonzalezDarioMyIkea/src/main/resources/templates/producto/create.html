@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MyIkea - Nuevo producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+<div th:replace="fragments/cabecera :: cabecera"></div>
+<main style="margin: 4em">
+    <h1>Crear Nuevo Producto</h1>
+    <form th:action="@{/productos/create}" th:object="${producto}" method="post" enctype="multipart/form-data" style="margin-right: 35%">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{productName}" required class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="precio"  class="form-label">Precio:</label>
+            <input type="number" id="precio" th:field="*{productPrice}" required class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="stock"  class="form-label">Stock:</label>
+            <input type="number" id="stock" th:field="*{productStock}" required  class="form-control"/>
+        </div>
+        <input hidden type="text" id="imagen2" th:field="*{productPicture}" value="" class="form-control"/>
+        <div class="mb-3">
+            <label for="imagen"  class="form-label">Imagen:</label>
+            <input type="file" id="imagen" name="imagen" required class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="selectProvincia"  class="form-label">Provincia</label>
+            <select id="selectProvincia" name="provincia" class="form-select">
+                <option value="">Selecciona una Provincia</option>
+                <option th:each="provincia : ${provincias}" th:value="${provincia.idProvincia}" th:text="${provincia.nombre}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="selectMunicipio"  class="form-label">Municipio</label>
+            <select id="selectMunicipio" name="municipio" th:field="*{idMunicipio}" class="form-select">
+                <option th:each="municipio : ${municipios}" th:value="${municipio.idMunicipio}" th:data-provincia="${municipio.idProvincia}" th:text="${municipio.nombre}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Crear Producto</button>
+        </div>
+    </form>
+</main>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectProvincia = document.getElementById('selectProvincia');
+        const selectMunicipio = document.getElementById('selectMunicipio');
+
+        selectProvincia.addEventListener('change', function() {
+            const provinciaSeleccionada = this.value;
+            actualizarMunicipios(provinciaSeleccionada);
+        });
+
+        selectMunicipio.addEventListener('change', function() {
+            const municipioSeleccionado = this.value;
+            actualizarProvincia(municipioSeleccionado);
+        });
+
+        function actualizarMunicipios(provinciaId) {
+            Array.from(selectMunicipio.options).forEach(function(option) {
+                if (option.dataset.provincia === provinciaId || option.value === "") {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+            selectMunicipio.value = "";
+        }
+
+        function actualizarProvincia(municipioId) {
+            const municipioSeleccionado = Array.from(selectMunicipio.options).find(option => option.value === municipioId);
+            if (municipioSeleccionado) {
+                selectProvincia.value = municipioSeleccionado.dataset.provincia;
+            }
+        }
+    });
+</script>
+
+</html>
