@@ -50,4 +50,4 @@ jobs:
           app-name: 'MyIkea'
           slot-name: 'Production'
           package: '*.war'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_73F51EF67C434E8BAB87CD7083CBA7F4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_99457BAB73E447CE82341E110DCA0C27 }}
