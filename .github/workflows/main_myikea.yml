@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Java version
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v1
         with:
           java-version: '17'
 
@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'MyIkea'
           slot-name: 'Production'
-          package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_70B5D2B855804B79B56A77D1BB6CF31A }}
+          package: '*.war'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_73F51EF67C434E8BAB87CD7083CBA7F4 }}
