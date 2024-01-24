@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'MyIkea'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_70B5D2B855804B79B56A77D1BB6CF31A }}
